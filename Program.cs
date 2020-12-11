@@ -43,12 +43,12 @@ namespace Bogosort
             stopwatch.Stop();
 
             //Print sorted array
-            Console.Write("Sorted array: ");
+            Console.Write("Sorted array:");
             for (int i = 0; i < arr.Length; ++i)
             {
                 Console.Write(" {0}", arr[i]);
             }
-            Console.WriteLine("\nTime taken to sort: {0}ms\nNumber of swaps: {1}", stopwatch.ElapsedMilliseconds, swaps);
+            Console.WriteLine($"\nTime taken to sort: {stopwatch.ElapsedMilliseconds}ms\nNumber of swaps: {swaps}");
         }
 
         static int[] Bogosort(int[] array)  //Bogosort algorithm
