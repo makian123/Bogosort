@@ -1,10 +1,15 @@
 ﻿using System;
+using System.Threading;
+using System.Diagnostics;
+
 
 namespace Bogosort
 {
     class Program
     {
-        static int[] Shuffle(int[] array)
+        public static int swaps;
+
+        static int[] Shuffle(int[] array)   //Shuffle values inside the array
         {
             var random = new Random();
             for (int i = array.Length; i > 1; i--)
@@ -15,30 +20,42 @@ namespace Bogosort
                 int tmp = array[j];
                 array[j] = array[i - 1];
                 array[i - 1] = tmp;
+                swaps++;
             }
             return array;
         }
 
         static void Main(string[] args)
         {
-            int[] arr = new int[20];
+            //Initialize variables
+            int length = 9;
+            int[] arr = new int[length];
+            Stopwatch stopwatch = new Stopwatch();
 
-            for(int i = 0; i < 20; ++i)
+            //Fill array
+            for(int i = 0; i < arr.Length; ++i)
             {
-                arr[i] = i;
+                arr[i] = i + 1;
             }
 
+            //Shuffle
             arr = Shuffle(arr);
 
+            //Start timing, shuffle array, stop timing
+            stopwatch.Start();
             arr = Bogosort(arr);
+            stopwatch.Stop();
 
-            for (int i = 0; i < 20; ++i)
+            //Print sorted array
+            Console.Write("Sorted array: ");
+            for (int i = 0; i < arr.Length; ++i)
             {
-                Console.WriteLine(arr[i]);
+                Console.Write(" {0}", arr[i]);
             }
+            Console.WriteLine("\nTime taken to sort: {0}ms\nNumber of swaps: {1}", stopwatch.ElapsedMilliseconds, swaps);
         }
 
-        static int[] Bogosort(int[] array)
+        static int[] Bogosort(int[] array)  //Bogosort algorithm
         {
             while(!Sorted(array))
             {
@@ -47,9 +64,9 @@ namespace Bogosort
             return array;
         }
 
-        static bool Sorted(int[] array)
+        static bool Sorted(int[] array) //Check if sorted
         {
-            for(int i = 0; i < array.Length; i += 2)
+            for(int i = 0; i < array.Length - 1; ++i)
             {
                 if(array[i] > array[i + 1])
                 {
