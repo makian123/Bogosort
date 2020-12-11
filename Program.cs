@@ -1,25 +1,21 @@
 ﻿using System;
 using System.Threading;
 using System.Diagnostics;
+using System.Linq;
 
 
 namespace Bogosort
 {
     class Program
     {
-        public static int swaps;
+        public static int swaps = 0;
 
         static int[] Shuffle(int[] array)   //Shuffle values inside the array
         {
-            var random = new Random();
+            Random random = new Random();
             for (int i = array.Length; i > 1; i--)
             {
-                // Pick random element to swap.
-                int j = random.Next(i); // 0 <= j <= i-1
-                                        // Swap.
-                int tmp = array[j];
-                array[j] = array[i - 1];
-                array[i - 1] = tmp;
+                array = array.OrderBy(i => random.Next()).ToArray();
                 swaps++;
             }
             return array;
